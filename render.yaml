@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: maritime-digest-api
+    env: python
+    buildCommand: cd python-backend && pip install -r requirements.txt
+    startCommand: cd python-backend && gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.6 

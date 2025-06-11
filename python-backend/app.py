@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from fetch_news import fetch_articles
 from datetime import datetime, timedelta
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -27,4 +28,5 @@ def get_news():
     return jsonify(cached_articles)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5050)
+    port = int(os.environ.get("PORT", 5050))
+    app.run(host="0.0.0.0", port=port)
