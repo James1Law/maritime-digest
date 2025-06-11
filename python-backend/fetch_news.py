@@ -1,4 +1,5 @@
 import feedparser
+import html
 
 FEEDS = [
     "https://www.marinelink.com/rss/allnews",
@@ -68,10 +69,11 @@ def fetch_articles(limit_per_feed=3):
             source = feed.feed.get("title", "Unknown Source")
             
             # Create article dictionary
+            summary = html.unescape(entry.summary) if "summary" in entry else ""
             article = {
                 "title": entry.title,
                 "link": entry.link,
-                "summary": entry.summary if "summary" in entry else "",
+                "summary": summary,
                 "source": source
             }
             
