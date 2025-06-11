@@ -2,11 +2,17 @@ import feedparser
 import html
 
 FEEDS = [
+    "https://www.maritime-executive.com/rss/main",
+    "https://www.marinetechnologynews.com/rss",
+    "https://www.oedigital.com/rss",
+    "https://www.hellenicshippingnews.com/feed/",
+    "https://smartmaritimenetwork.com/feed/",
+    "https://www.marinemec.com/rss",
+    "https://www.thedigitalship.com/magazine/feed",
     "https://www.marinelink.com/rss/allnews",
     "https://www.seatrade-maritime.com/rss.xml",
     "https://splash247.com/feed/",
-    "https://gcaptain.com/feed/",
-    "https://www.marinetraffic.com/en/maritime-news/rss"
+    "https://gcaptain.com/feed/"
 ]
 
 # Expanded category keyword mappings for maritime news
