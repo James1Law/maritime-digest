@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Ship, Calendar, Clock, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Skeleton } from "@/components/ui/skeleton"
+import React from "react"
 
 // Define the article type
 type Article = {
@@ -75,6 +76,12 @@ function NewsCardSkeleton() {
       </CardContent>
     </Card>
   )
+}
+
+// Utility to strip HTML tags from a string
+function stripHtml(html: string) {
+  if (!html) return ""
+  return html.replace(/<[^>]+>/g, "")
 }
 
 export default function HomePage() {
@@ -209,14 +216,26 @@ export default function HomePage() {
               <Card key={index} className="hover:shadow-lg transition-shadow duration-200">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between mb-2">
-                    {article.category && (
-                      <Badge
-                        variant="secondary"
-                        className={categoryColors[article.category as keyof typeof categoryColors]}
-                      >
-                        {article.category}
-                      </Badge>
-                    )}
+                    <div className="flex flex-wrap gap-1">
+                      {Array.isArray(article.category)
+                        ? article.category.map((cat) => (
+                            <Badge
+                              key={cat}
+                              variant="secondary"
+                              className={categoryColors[cat as keyof typeof categoryColors]}
+                            >
+                              {cat}
+                            </Badge>
+                          ))
+                        : article.category && (
+                            <Badge
+                              variant="secondary"
+                              className={categoryColors[article.category as keyof typeof categoryColors]}
+                            >
+                              {article.category}
+                            </Badge>
+                          )}
+                    </div>
                     {article.publishedAt && (
                       <div className="flex items-center text-xs text-muted-foreground">
                         <Clock className="h-3 w-3 mr-1" />
@@ -228,7 +247,7 @@ export default function HomePage() {
                   <CardDescription className="text-sm text-muted-foreground">{article.source}</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{article.summary}</p>
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{stripHtml(article.summary)}</p>
                   <Button
                     variant="outline"
                     size="sm"
